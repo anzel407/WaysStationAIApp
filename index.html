@@ -1425,6 +1425,38 @@
       cursor: pointer;
     }
 
+    .ai-msg.bot.ai-msg-actions {
+      background: none;
+      box-shadow: none;
+      padding: 0;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .ai-msg.bot.ai-msg-actions .ai-action-grid {
+      margin-bottom: 0;
+    }
+
+    #ai-view-hub.active {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #ai-chat-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      scrollbar-width: none;
+    }
+
+    #ai-chat-scroll::-webkit-scrollbar { display: none; }
+
+    #aiChatLog {
+      padding-bottom: 8px;
+    }
+
     .ai-chat-log {
       display: flex;
       flex-direction: column;
@@ -1457,14 +1489,12 @@
     }
 
     .ai-chat-input-row {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, var(--bg-gray) 60%, transparent);
-      padding: 14px 16px 16px 16px;
+      flex-shrink: 0;
+      background: var(--bg-gray);
+      padding: 10px 16px 16px 16px;
       display: flex;
       gap: 8px;
+      border-top: 1px solid #eef1f4;
     }
 
     .ai-chat-input-row input {
@@ -1681,10 +1711,12 @@
     .plan-ex-row {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
       font-size: 12px;
       font-weight: 600;
       color: #475569;
-      padding: 5px 0;
+      padding: 7px 0;
       border-top: 1px dashed #eef1f4;
     }
 
@@ -1695,6 +1727,137 @@
     .plan-ex-row .sets {
       color: #94a3b8;
       font-weight: 700;
+      flex-shrink: 0;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .ex-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .ex-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ai-orange-dark);
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+    }
+
+    /* ---- Schedule tab: split badge, today hero, week strip ---- */
+    .split-type-chip {
+      margin-left: auto;
+      background: #eef2ff;
+      color: #4338ca;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 10px;
+    }
+
+    .today-session-card {
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+
+    .today-session-card.is-workout {
+      background: linear-gradient(120deg, #1e293b, #334155);
+      color: white;
+    }
+
+    .today-session-card.is-rest {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1.5px dashed #cbd5e1;
+    }
+
+    .today-label {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      opacity: 0.75;
+      letter-spacing: 0.4px;
+    }
+
+    .today-focus {
+      font-size: 16px;
+      font-weight: 800;
+      margin: 3px 0 2px 0;
+    }
+
+    .today-sub {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.85;
+      line-height: 1.4;
+    }
+
+    .week-days-strip {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .week-day-pill {
+      border-radius: 12px;
+      padding: 9px 0;
+      text-align: center;
+      cursor: pointer;
+      background: #f8fafc;
+      border: 1.5px solid transparent;
+    }
+
+    .week-day-pill .wd-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 800;
+      color: #94a3b8;
+    }
+
+    .week-day-pill .wd-dot {
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin: 5px auto 0 auto;
+      background: transparent;
+    }
+
+    .week-day-pill.workout .wd-label {
+      color: var(--ai-orange-dark);
+    }
+
+    .week-day-pill.workout .wd-dot {
+      background: var(--ai-orange);
+    }
+
+    .week-day-pill.is-today {
+      border-color: var(--ai-orange);
+      background: var(--ai-orange-light);
+    }
+
+    .week-day-pill.is-selected {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 1px var(--primary-blue) inset;
+    }
+
+    #weekDayDetailBox {
+      margin-top: 10px;
+    }
+
+    .rest-day-note {
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      text-align: center;
     }
 
     /* ---- Form coach ---- */
@@ -1810,6 +1973,341 @@
     }
 
     .coach-summary-row:last-child { border-bottom: none; }
+
+    /* ---- Workout Session (exercise-by-exercise) ---- */
+    .session-focus-banner {
+      background: linear-gradient(120deg, #1e293b, #334155);
+      color: white;
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+
+    .session-focus-banner .tag {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      opacity: 0.75;
+      letter-spacing: 0.4px;
+    }
+
+    .session-focus-banner .name {
+      font-size: 15px;
+      font-weight: 800;
+      margin-top: 3px;
+    }
+
+    .session-focus-banner .progress-track {
+      height: 6px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 4px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .session-focus-banner .progress-fill {
+      height: 100%;
+      background: var(--ai-orange);
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+
+    .session-ex-card {
+      background: white;
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      border: 1.5px solid transparent;
+    }
+
+    .session-ex-card.done {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+    }
+
+    .session-ex-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .session-ex-card.done .session-ex-num {
+      background: var(--green-status);
+      color: white;
+    }
+
+    .session-ex-card .info { flex: 1; min-width: 0; }
+    .session-ex-card .n { font-size: 13px; font-weight: 800; color: #0f172a; }
+    .session-ex-card .s { font-size: 11px; font-weight: 600; color: #94a3b8; margin-top: 2px; }
+    .session-ex-card .chev { color: #cbd5e1; flex-shrink: 0; }
+
+    .video-mock {
+      background: linear-gradient(160deg, #334155, #1e293b);
+      border-radius: 18px;
+      height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin-bottom: 16px;
+      position: relative;
+      gap: 8px;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .video-mock .play-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-mock .lbl {
+      font-size: 11.5px;
+      font-weight: 700;
+      opacity: 0.85;
+    }
+
+    .video-mock .badge-demo {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.4);
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .step-list { margin-bottom: 16px; }
+
+    .step-row {
+      display: flex;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px dashed #eef1f4;
+    }
+
+    .step-row:first-child { border-top: none; }
+
+    .step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--ai-orange-light);
+      color: var(--ai-orange-dark);
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-text {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    .suggest-note {
+      background: var(--ai-orange-light);
+      color: var(--ai-orange-dark);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 9px 12px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .sets-table { margin-bottom: 10px; }
+
+    .sets-table-head, .set-row {
+      display: grid;
+      grid-template-columns: 26px 1fr 1fr 28px;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 0;
+    }
+
+    .sets-table-head {
+      font-size: 10px;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    .set-row input {
+      width: 100%;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 8px 6px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      color: #0f172a;
+      background: white;
+    }
+
+    .set-row input:focus { outline: none; border-color: var(--primary-blue); }
+
+    .set-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #94a3b8;
+      text-align: center;
+    }
+
+    .set-remove-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: none;
+      background: #fef2f2;
+      color: #ef4444;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .btn-add-set {
+      width: 100%;
+      background: #f8fafc;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
+
+    /* ---- Workout Log History (progressive overload sheet) ---- */
+    .history-card { cursor: pointer; }
+
+    .history-summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed #eef1f4;
+    }
+
+    .history-summary-row .vol {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    .history-summary-row .chev { color: #cbd5e1; flex-shrink: 0; }
+
+    .log-detail-hero {
+      background: linear-gradient(135deg, #1e293b, #334155);
+      color: white;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .log-detail-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .log-detail-stat-box {
+      background: white;
+      border-radius: 14px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .log-detail-stat-box .v { font-size: 16px; font-weight: 800; color: #0f172a; }
+    .log-detail-stat-box .l { font-size: 9.5px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-top: 2px; }
+
+    .log-ex-card {
+      background: white;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .log-ex-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .log-ex-head .n { font-size: 13px; font-weight: 800; color: #0f172a; }
+    .log-ex-head .m {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ai-orange-dark);
+      background: var(--ai-orange-light);
+      padding: 3px 8px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .log-set-row {
+      display: grid;
+      grid-template-columns: 26px 1fr 1fr;
+      gap: 8px;
+      padding: 5px 0;
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    .log-set-row.head { font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; }
+
+    .trend-badge {
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 8px;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    .trend-badge.up { background: #dcfce7; color: #15803d; }
+    .trend-badge.down { background: #fef2f2; color: #b91c1c; }
+    .trend-badge.flat { background: #f1f5f9; color: #64748b; }
 
     /* ---- Food scanner ---- */
     .scan-capture-box {
@@ -2485,155 +2983,14 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg>
               </div>
               <div class="t">Chưa có giáo án AI</div>
-              <div class="s">Để WayBuddy tạo giáo án cá nhân hóa dựa trên mục tiêu, kinh nghiệm và thời gian rảnh của bạn.</div>
+              <div class="s">WayBuddy sẽ tạo giáo án cá nhân hóa — chọn kiểu split phù hợp (Full Body, Upper/Lower, Push/Pull/Legs, Bro Split...), bài tập và cường độ riêng cho mục tiêu, kinh nghiệm và lịch rảnh của bạn.</div>
               <button class="btn-ai-outline" onclick="openAI('wizard')">✨ Tạo giáo án bằng AI</button>
             </div>
           </div>
 
-          <!-- Calendar Card -->
-          <div class="calendar-card">
-            <div class="calendar-header">
-              <div class="calendar-title-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0088ff" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                <span>Tập luyện tháng này</span>
-              </div>
-              <div class="month-picker">
-                <button class="month-btn">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-                </button>
-                <span>07/2026</span>
-                <button class="month-btn">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-              </div>
-            </div>
-
-            <div class="stats-cards-row">
-              <div class="stat-box absent">
-                <div class="box-title">Không tập luyện</div>
-                <div class="box-number">28</div>
-              </div>
-              <div class="stat-box attended">
-                <div class="box-title">Đã tập luyện</div>
-                <div class="box-number">3</div>
-              </div>
-            </div>
-
-            <!-- Month Calendar Grid -->
-            <div class="calendar-grid">
-              <div class="day-header">T2</div>
-              <div class="day-header">T3</div>
-              <div class="day-header">T4</div>
-              <div class="day-header">T5</div>
-              <div class="day-header">T6</div>
-              <div class="day-header">T7</div>
-              <div class="day-header">CN</div>
-
-              <div class="calendar-day prev-month">29</div>
-              <div class="calendar-day prev-month">30</div>
-              <div class="calendar-day">1</div>
-              <div class="calendar-day">2</div>
-              <div class="calendar-day">3</div>
-              <div class="calendar-day">4</div>
-              <div class="calendar-day">5</div>
-
-              <div class="calendar-day">6</div>
-              <div class="calendar-day">7</div>
-              <div class="calendar-day">8</div>
-              <div class="calendar-day">9</div>
-              <div class="calendar-day">10</div>
-              <div class="calendar-day">11</div>
-              <div class="calendar-day">12</div>
-
-              <div class="calendar-day">13</div>
-              <div class="calendar-day">14</div>
-              <div class="calendar-day">15</div>
-              <div class="calendar-day">16</div>
-              <div class="calendar-day">17</div>
-              <div class="calendar-day attended-day">18</div>
-              <div class="calendar-day">19</div>
-
-              <div class="calendar-day">20</div>
-              <div class="calendar-day">21</div>
-              <div class="calendar-day">22</div>
-              <div class="calendar-day attended-day">23</div>
-              <div class="calendar-day">24</div>
-              <div class="calendar-day">25</div>
-              <div class="calendar-day attended-day">26</div>
-
-              <div class="calendar-day">27</div>
-              <div class="calendar-day">28</div>
-              <div class="calendar-day">29</div>
-              <div class="calendar-day">30</div>
-              <div class="calendar-day">31</div>
-              <div class="calendar-day prev-month">1</div>
-              <div class="calendar-day prev-month">2</div>
-            </div>
-          </div>
-
-          <!-- History Section -->
+          <!-- History Section (Nhật ký tập tạ — progressive overload) -->
           <div class="section-subtitle">Lịch sử tập luyện</div>
-          <div class="history-list">
-            <div class="history-card">
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                <span class="history-date">26/07/2026</span>
-              </div>
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>16:45</span>
-              </div>
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span>Ways Station 86 Nguyễn Quý Anh</span>
-              </div>
-            </div>
-
-            <div class="history-card">
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                <span class="history-date">23/07/2026</span>
-              </div>
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>16:58</span>
-              </div>
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span>Ways Station 86 Nguyễn Quý Anh</span>
-              </div>
-            </div>
-
-            <div class="history-card">
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                <span class="history-date">18/07/2026</span>
-              </div>
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>17:15</span>
-              </div>
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span>Ways Station 86 Nguyễn Quý Anh</span>
-              </div>
-            </div>
-
-            <div class="history-card">
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                <span class="history-date">12/06/2026</span>
-              </div>
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>18:00</span>
-              </div>
-              <div class="history-row">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span>Ways Station 86 Nguyễn Quý Anh</span>
-              </div>
-            </div>
-          </div>
+          <div class="history-list" id="historyList"></div>
         </div>
       </div>
 
@@ -3000,57 +3357,59 @@
 
       <div class="ai-views-wrapper">
 
-        <!-- ===== HUB VIEW ===== -->
+        <!-- ===== HUB VIEW (chatbox) ===== -->
         <div class="ai-view active" id="ai-view-hub">
 
-          <div class="ai-greeting-card">
-            <img src="mascot.png" alt="WayBuddy">
-            <div class="ai-greeting-bubble">
-              Chào Vũ 👋 Bạn đang ở <strong>tuần 2</strong> hành trình tập luyện. Mình đã chuẩn bị vài gợi ý cho bạn hôm nay!
+          <div id="ai-chat-scroll">
+          <div class="ai-chat-log" id="aiChatLog">
+
+            <div class="ai-msg bot">
+              Chào Vũ 👋 Mình là WayBuddy. Bạn đang ở <strong>tuần 2</strong> hành trình tập luyện — mình có thể giúp bạn mấy việc này nè:
             </div>
+
+            <div class="ai-msg bot ai-msg-actions">
+              <div class="ai-action-grid">
+                <div class="ai-action-card" onclick="openAI('wizard')">
+                  <div class="ai-action-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg></div>
+                  <div class="ai-action-title">Tạo giáo án</div>
+                  <div class="ai-action-desc">Cá nhân hóa theo mục tiêu & thời gian rảnh</div>
+                </div>
+                <div class="ai-action-card" onclick="openAI('coach')">
+                  <div class="ai-action-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+                  <div class="ai-action-title">AI Form Coach</div>
+                  <div class="ai-action-desc">Camera theo dõi tư thế, nhắc bằng giọng nói</div>
+                </div>
+                <div class="ai-action-card" onclick="openAI('food')">
+                  <div class="ai-action-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+                  <div class="ai-action-title">AI Food Scanner</div>
+                  <div class="ai-action-desc">Chụp món ăn, ước tính calo & macro</div>
+                </div>
+                <div class="ai-action-card" onclick="openAI('report')">
+                  <div class="ai-action-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-6 3 3 5-8"/></svg></div>
+                  <div class="ai-action-title">Báo cáo tiến độ</div>
+                  <div class="ai-action-desc">Thống kê buổi tập & gợi ý cải thiện</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-msg bot">
+              Hoặc bạn cứ hỏi mình bất cứ điều gì, ví dụ:
+              <div class="ai-chip-row" style="margin-top:10px;">
+                <div class="ai-chip" onclick="aiAskChip('Hôm nay tập gì?')">Hôm nay tập gì?</div>
+                <div class="ai-chip" onclick="aiAskChip('Máy nào đang trống?')">Máy nào đang trống?</div>
+                <div class="ai-chip" onclick="aiAskChip('Ăn gì sau khi tập?')">Ăn gì sau khi tập?</div>
+              </div>
+            </div>
+
+          </div>
           </div>
 
-          <div class="ai-stage-card">
-            <div class="ai-stage-top">
-              <span class="ai-stage-label">Giai đoạn onboarding</span>
-              <span class="ai-stage-label">0–3 tháng</span>
-            </div>
-            <div class="ai-stage-name">Giai đoạn 1 · Người mới bắt đầu</div>
-            <div class="ai-stage-stars">★★★★★</div>
-            <div class="ai-stage-desc">WayBuddy đồng hành gần như mỗi buổi tập: xây giáo án, sửa form, nhắc lịch. Khi bạn quen dần, AI sẽ lùi lại và chỉ hỗ trợ khi cần — đó là mục tiêu của tụi mình!</div>
+          <div class="ai-chat-input-row">
+            <input type="text" id="aiChatInput" placeholder="Nhắn tin cho WayBuddy..." onkeydown="if(event.key==='Enter') aiSendTyped();">
+            <button class="ai-send-btn" onclick="aiSendTyped()" aria-label="Gửi">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
           </div>
-
-          <div class="ai-section-label">Bạn cần WayBuddy giúp gì?</div>
-          <div class="ai-action-grid">
-            <div class="ai-action-card" onclick="openAI('wizard')">
-              <div class="ai-action-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg></div>
-              <div class="ai-action-title">Tạo giáo án</div>
-              <div class="ai-action-desc">Cá nhân hóa theo mục tiêu & thời gian rảnh</div>
-            </div>
-            <div class="ai-action-card" onclick="openAI('coach')">
-              <div class="ai-action-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
-              <div class="ai-action-title">AI Form Coach</div>
-              <div class="ai-action-desc">Camera theo dõi tư thế, nhắc bằng giọng nói</div>
-            </div>
-            <div class="ai-action-card" onclick="openAI('food')">
-              <div class="ai-action-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
-              <div class="ai-action-title">AI Food Scanner</div>
-              <div class="ai-action-desc">Chụp món ăn, ước tính calo & macro</div>
-            </div>
-            <div class="ai-action-card" onclick="openAI('report')">
-              <div class="ai-action-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-6 3 3 5-8"/></svg></div>
-              <div class="ai-action-title">Báo cáo tiến độ</div>
-              <div class="ai-action-desc">Thống kê buổi tập & gợi ý cải thiện</div>
-            </div>
-          </div>
-
-          <div class="ai-section-label">Hỏi nhanh WayBuddy</div>
-          <div class="ai-chip-row">
-            <div class="ai-chip" onclick="aiAskChip('Hôm nay tập gì?')">Hôm nay tập gì?</div>
-            <div class="ai-chip" onclick="aiAskChip('Máy nào đang trống?')">Máy nào đang trống?</div>
-            <div class="ai-chip" onclick="aiAskChip('Ăn gì sau khi tập?')">Ăn gì sau khi tập?</div>
-          </div>
-          <div class="ai-chat-log" id="aiChatLog"></div>
 
         </div>
 
@@ -3062,6 +3421,7 @@
             <div class="dot" id="wp-2"></div>
             <div class="dot" id="wp-3"></div>
             <div class="dot" id="wp-4"></div>
+            <div class="dot" id="wp-5"></div>
           </div>
 
           <!-- Step 1: Goal -->
@@ -3119,22 +3479,56 @@
               <div class="option-emoji">⏱️</div>
               <div class="option-text"><div class="t">60 phút</div><div class="s">Buổi tập đầy đủ, chuyên sâu</div></div>
             </div>
+            <div class="option-card" onclick="wizSelect('time','90 phút',this)">
+              <div class="option-emoji">⏱️</div>
+              <div class="option-text"><div class="t">90 phút</div><div class="s">Buổi tập chuyên sâu, nhiều bài tập nhất</div></div>
+            </div>
             <div class="wizard-nav">
               <button class="btn-ai-secondary" onclick="wizPrev(2)">Quay lại</button>
-              <button class="btn-ai-primary" id="wizNext3" disabled onclick="wizGenerate()">Tạo giáo án ✨</button>
+              <button class="btn-ai-primary" id="wizNext3" disabled onclick="wizNext(4)">Tiếp tục</button>
             </div>
           </div>
 
-          <!-- Step 4: Loading -->
+          <!-- Step 4: Days per week -->
           <div class="wizard-step" id="wizard-step-4" style="display:none;">
+            <div class="wizard-step-title">Mỗi tuần bạn tập được mấy buổi?</div>
+            <div class="wizard-step-sub">AI sẽ chia lịch và nhóm cơ sao cho hợp lý nhất với số buổi này.</div>
+            <div class="option-card" onclick="wizSelect('days',2,this)">
+              <div class="option-emoji">🗓️</div>
+              <div class="option-text"><div class="t">2 buổi / tuần</div><div class="s">Phù hợp lịch bận, mới bắt đầu làm quen</div></div>
+            </div>
+            <div class="option-card" onclick="wizSelect('days',3,this)">
+              <div class="option-emoji">🗓️</div>
+              <div class="option-text"><div class="t">3 buổi / tuần</div><div class="s">Cân bằng giữa tập luyện và phục hồi</div></div>
+            </div>
+            <div class="option-card" onclick="wizSelect('days',4,this)">
+              <div class="option-emoji">🗓️</div>
+              <div class="option-text"><div class="t">4 buổi / tuần</div><div class="s">Tiến bộ nhanh hơn, cần quen vận động</div></div>
+            </div>
+            <div class="option-card" onclick="wizSelect('days',5,this)">
+              <div class="option-emoji">🗓️</div>
+              <div class="option-text"><div class="t">5 buổi / tuần</div><div class="s">Cường độ cao, dành cho người có kinh nghiệm</div></div>
+            </div>
+            <div class="option-card" onclick="wizSelect('days',6,this)">
+              <div class="option-emoji">🗓️</div>
+              <div class="option-text"><div class="t">6 buổi / tuần</div><div class="s">Tối đa hóa tiến độ, cần thời gian phục hồi tốt</div></div>
+            </div>
+            <div class="wizard-nav">
+              <button class="btn-ai-secondary" onclick="wizPrev(3)">Quay lại</button>
+              <button class="btn-ai-primary" id="wizNext4" disabled onclick="wizGenerate()">Tạo giáo án ✨</button>
+            </div>
+          </div>
+
+          <!-- Step 5: Loading -->
+          <div class="wizard-step" id="wizard-step-5" style="display:none;">
             <div class="plan-loading">
               <img src="mascot.png" alt="WayBuddy đang tạo giáo án">
               <div class="txt">WayBuddy đang xây giáo án riêng cho bạn...</div>
             </div>
           </div>
 
-          <!-- Step 5: Result -->
-          <div class="wizard-step" id="wizard-step-5" style="display:none;">
+          <!-- Step 6: Result -->
+          <div class="wizard-step" id="wizard-step-6" style="display:none;">
             <div class="plan-summary-banner" id="planSummaryBanner"></div>
             <div id="planDaysContainer"></div>
             <div class="wizard-nav">
@@ -3190,44 +3584,22 @@
 
         <!-- ===== PROGRESS REPORT VIEW ===== -->
         <div class="ai-view" id="ai-view-report">
+          <div id="reportContent"></div>
+        </div>
 
-          <div class="report-hero">
-            <div class="row">
-              <div>
-                <div style="font-size:11px; font-weight:700; opacity:0.85; text-transform:uppercase;">Buổi tập hôm nay</div>
-                <div style="font-size:16px; font-weight:800; margin-top:2px;">Push Day — Ngực · Vai · Tay sau</div>
-              </div>
-              <div style="text-align:right;">
-                <div class="streak">🔥 4</div>
-                <div style="font-size:10px; font-weight:700; opacity:0.85;">ngày liên tiếp</div>
-              </div>
-            </div>
-          </div>
+        <!-- ===== WORKOUT SESSION — EXERCISE LIST VIEW ===== -->
+        <div class="ai-view" id="ai-view-session">
+          <div id="sessionListContent"></div>
+        </div>
 
-          <div class="report-stat-grid">
-            <div class="report-stat-box"><div class="v">42′</div><div class="l">Thời gian</div></div>
-            <div class="report-stat-box"><div class="v">310</div><div class="l">Kcal</div></div>
-            <div class="report-stat-box"><div class="v">6/6</div><div class="l">Bài hoàn thành</div></div>
-          </div>
+        <!-- ===== WORKOUT SESSION — SINGLE EXERCISE VIEW ===== -->
+        <div class="ai-view" id="ai-view-sessionEx">
+          <div id="sessionExContent"></div>
+        </div>
 
-          <div class="report-compare-card">
-            <div class="ai-section-label" style="margin-top:0;">So với buổi trước</div>
-            <div class="compare-bar-row">
-              <div class="lbl-row"><span>Mức tạ đẩy ngực</span><span>32kg → 34kg</span></div>
-              <div class="compare-bar-track"><div class="seg prev" style="width:80%;"></div><div class="seg now" style="width:20%;"></div></div>
-            </div>
-            <div class="compare-bar-row">
-              <div class="lbl-row"><span>Số reps trung bình</span><span>8 → 10</span></div>
-              <div class="compare-bar-track"><div class="seg prev" style="width:75%;"></div><div class="seg now" style="width:25%;"></div></div>
-            </div>
-            <div class="food-tip-box">
-              <span>💡</span>
-              <span>Bạn đang tiến bộ đều! WayBuddy đề xuất tăng thêm 2kg cho bài đẩy ngực vào buổi tới, và ưu tiên ngủ đủ 7-8 tiếng để phục hồi cơ tốt hơn.</span>
-            </div>
-          </div>
-
-          <button class="btn-ai-primary" onclick="openAI('wizard')">Xem / cập nhật giáo án tuần này</button>
-
+        <!-- ===== WORKOUT LOG DETAIL VIEW (from history) ===== -->
+        <div class="ai-view" id="ai-view-logDetail">
+          <div id="logDetailContent"></div>
         </div>
 
       </div>
@@ -3302,6 +3674,9 @@
       coach:  { title: 'AI Form Coach', sub: 'Camera theo dõi tư thế', back: true },
       food:   { title: 'AI Food Scanner', sub: 'Chấm điểm bữa ăn', back: true },
       report: { title: 'Báo cáo tiến độ', sub: 'Thống kê & gợi ý từ AI', back: true },
+      session: { title: 'Buổi tập hôm nay', sub: '', back: true },
+      sessionEx: { title: 'Bài tập', sub: '', back: true },
+      logDetail: { title: 'Chi tiết buổi tập', sub: '', back: true },
     };
 
     let aiCurrentView = 'hub';
@@ -3316,7 +3691,11 @@
     }
 
     function aiGoBack() {
-      showAIView('hub');
+      if (aiCurrentView === 'sessionEx') {
+        showSessionListView();
+      } else {
+        showAIView('hub');
+      }
     }
 
     function showAIView(view) {
@@ -3328,6 +3707,7 @@
       aiHeaderSubtitle.textContent = meta.sub;
       aiBackBtn.style.display = meta.back ? 'flex' : 'none';
       if (view === 'wizard') wizRestart(true);
+      if (view === 'report') renderProgressReport();
     }
 
     function showToast(msg) {
@@ -3338,14 +3718,24 @@
       toast._t = setTimeout(() => toast.classList.remove('show'), 2600);
     }
 
-    /* ---------------- Chat (hub quick-ask) ---------------- */
-    const AI_CHAT_REPLIES = {
-      'Hôm nay tập gì?': 'Theo giáo án của bạn, hôm nay là buổi Push (Ngực · Vai · Tay sau) — khoảng 30 phút, 6 bài tập. Bạn có thể xem chi tiết trong tab Tập luyện!',
-      'Máy nào đang trống?': 'Hiện tại máy Chest Press và Cable Crossover đang trống ở cơ sở 86 Nguyễn Quý Anh. Máy Smith đang có người dùng, dự kiến trống sau 10 phút.',
-      'Ăn gì sau khi tập?': 'Sau buổi tập hôm nay bạn nên nạp thêm khoảng 25-30g protein — ví dụ 2 quả trứng + 1 hộp sữa chua Hy Lạp, hoặc ức gà + cơm gạo lứt. Dùng AI Food Scanner để mình chấm điểm bữa ăn cho bạn nhé!'
-    };
+    /* ---------------- Chat (hub quick-ask) — gọi AI thật qua Cloudflare Worker ---------------- */
 
-    function aiAskChip(question) {
+    // TODO: Dán URL Worker Cloudflare của bạn vào đây, ví dụ:
+    // 'https://ways-station-ai.ten-subdomain.workers.dev'
+    const AI_WORKER_URL = 'https://waybuddy.vn0138638.workers.dev/';
+
+    // Lưu lịch sử hội thoại để gửi kèm mỗi lần hỏi, giúp AI hiểu ngữ cảnh
+    let aiChatHistory = [];
+
+    function aiSendTyped() {
+      const input = document.getElementById('aiChatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      aiAskChip(text);
+    }
+
+    async function aiAskChip(question) {
       const log = document.getElementById('aiChatLog');
       const userMsg = document.createElement('div');
       userMsg.className = 'ai-msg user';
@@ -3354,17 +3744,46 @@
 
       const botMsg = document.createElement('div');
       botMsg.className = 'ai-msg bot';
-      botMsg.textContent = '...';
+      botMsg.textContent = 'WayBuddy đang suy nghĩ...';
       log.appendChild(botMsg);
-      log.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      botMsg.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
-      setTimeout(() => {
-        botMsg.textContent = AI_CHAT_REPLIES[question] || 'WayBuddy đang học thêm về câu hỏi này! Bạn có thể hỏi lễ tân hoặc PT để được hỗ trợ nhanh hơn nhé.';
-      }, 550);
+      if (!AI_WORKER_URL || AI_WORKER_URL.includes('YOUR-WORKER-NAME')) {
+        botMsg.textContent = '⚠️ Chưa cấu hình AI_WORKER_URL trong index.html. Hãy dán URL Cloudflare Worker của bạn vào biến AI_WORKER_URL.';
+        return;
+      }
+
+      try {
+        const res = await fetch(AI_WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: question, history: aiChatHistory })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || ('Worker lỗi ' + res.status));
+        }
+
+        const reply = data.reply || 'Xin lỗi, WayBuddy chưa có câu trả lời cho việc này.';
+        botMsg.textContent = reply;
+
+        aiChatHistory.push({ role: 'user', text: question });
+        aiChatHistory.push({ role: 'model', text: reply });
+        // Giới hạn lịch sử để tránh payload quá dài khi gửi lên worker
+        if (aiChatHistory.length > 20) aiChatHistory = aiChatHistory.slice(-20);
+
+      } catch (err) {
+        console.error('Lỗi gọi AI Worker:', err);
+        botMsg.textContent = 'Xin lỗi, WayBuddy đang gặp sự cố kết nối 🙏 Bạn thử lại sau ít phút nhé.';
+      }
+
+      botMsg.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
 
     /* ---------------- Plan Wizard ---------------- */
-    let wizSelections = { goal: null, level: null, time: null };
+    let wizSelections = { goal: null, level: null, time: null, days: null };
     let savedPlan = null;
 
     function wizSelect(group, value, el) {
@@ -3374,12 +3793,13 @@
       if (group === 'goal') document.getElementById('wizNext1').disabled = false;
       if (group === 'level') document.getElementById('wizNext2').disabled = false;
       if (group === 'time') document.getElementById('wizNext3').disabled = false;
+      if (group === 'days') document.getElementById('wizNext4').disabled = false;
     }
 
     function wizNext(step) {
       document.querySelectorAll('.wizard-step').forEach(s => s.style.display = 'none');
       document.getElementById('wizard-step-' + step).style.display = 'block';
-      for (let i = 1; i <= 4; i++) {
+      for (let i = 1; i <= 5; i++) {
         document.getElementById('wp-' + i).classList.toggle('done', i <= step);
       }
     }
@@ -3389,81 +3809,198 @@
     }
 
     function wizRestart(silent) {
-      wizSelections = { goal: null, level: null, time: null };
+      wizSelections = { goal: null, level: null, time: null, days: null };
       document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
       document.getElementById('wizNext1').disabled = true;
       document.getElementById('wizNext2').disabled = true;
       document.getElementById('wizNext3').disabled = true;
+      document.getElementById('wizNext4').disabled = true;
       if (!silent) wizNext(1); else wizNext(1);
     }
 
-    // A small library of workout templates — demonstrates AI personalization logic
-    const EXERCISE_POOL = {
-      'giảm cân': [
-        { name: 'Jumping Jacks khởi động', sets: '2 x 45s' },
-        { name: 'Goblet Squat', sets: '3 x 15' },
-        { name: 'Kettlebell Swing', sets: '3 x 12' },
-        { name: 'Mountain Climbers', sets: '3 x 30s' },
-        { name: 'Lat Pulldown', sets: '3 x 12' },
-        { name: 'Plank giữ tư thế', sets: '3 x 40s' },
+    // ---- Exercise database, organized by muscle group ----
+    // compound:true = big multi-joint lift (gets lower reps / longer rest when experienced)
+    const EXERCISE_DB = {
+      'Ngực': [
+        { name: 'Barbell Bench Press', compound: true },
+        { name: 'Incline Dumbbell Press', compound: true },
+        { name: 'Chest Fly máy', compound: false },
+        { name: 'Cable Crossover', compound: false },
+        { name: 'Push-up', compound: false },
       ],
-      'tăng cơ': [
-        { name: 'Barbell Bench Press', sets: '4 x 8' },
-        { name: 'Incline Dumbbell Press', sets: '3 x 10' },
-        { name: 'Seated Shoulder Press', sets: '3 x 10' },
-        { name: 'Cable Tricep Pushdown', sets: '3 x 12' },
-        { name: 'Chest Fly máy', sets: '3 x 12' },
-        { name: 'Push-up hoàn thiện', sets: '2 x tối đa' },
+      'Lưng': [
+        { name: 'Lat Pulldown', compound: true },
+        { name: 'Seated Cable Row', compound: true },
+        { name: 'Dumbbell Row', compound: true },
+        { name: 'Assisted Pull-up', compound: true },
+        { name: 'Back Extension', compound: false },
       ],
-      'giữ dáng': [
-        { name: 'Đạp xe khởi động', sets: '5 phút' },
-        { name: 'Bodyweight Squat', sets: '3 x 15' },
-        { name: 'Dumbbell Row', sets: '3 x 12' },
-        { name: 'Standing Shoulder Press', sets: '3 x 10' },
-        { name: 'Glute Bridge', sets: '3 x 15' },
-        { name: 'Giãn cơ toàn thân', sets: '5 phút' },
+      'Vai': [
+        { name: 'Seated Shoulder Press', compound: true },
+        { name: 'Standing Military Press', compound: true },
+        { name: 'Lateral Raise', compound: false },
+        { name: 'Face Pull', compound: false },
+      ],
+      'Tay trước': [
+        { name: 'Barbell Curl', compound: false },
+        { name: 'Dumbbell Hammer Curl', compound: false },
+        { name: 'Cable Curl', compound: false },
+      ],
+      'Tay sau': [
+        { name: 'Cable Tricep Pushdown', compound: false },
+        { name: 'Overhead Tricep Extension', compound: false },
+        { name: 'Dips hỗ trợ máy', compound: true },
+      ],
+      'Chân': [
+        { name: 'Barbell Squat', compound: true },
+        { name: 'Leg Press', compound: true },
+        { name: 'Romanian Deadlift', compound: true },
+        { name: 'Leg Curl máy', compound: false },
+        { name: 'Walking Lunges', compound: false },
+        { name: 'Calf Raise', compound: false },
+      ],
+      'Bụng': [
+        { name: 'Plank', compound: false },
+        { name: 'Cable Crunch', compound: false },
+        { name: 'Hanging Leg Raise', compound: false },
+        { name: 'Russian Twist', compound: false },
+      ],
+      'Cardio': [
+        { name: 'Chạy bộ máy (Treadmill)', compound: false },
+        { name: 'Đạp xe (Bike)', compound: false },
+        { name: 'Rowing máy', compound: false },
+        { name: 'Jumping Jacks', compound: false },
       ],
     };
 
-    const DAY_FOCUS_BY_GOAL = {
-      'giảm cân': ['HIIT Toàn thân', 'Cardio + Core', 'Tạ nhẹ Toàn thân'],
-      'tăng cơ':  ['Đẩy (Ngực-Vai-Tay sau)', 'Kéo (Lưng-Tay trước)', 'Chân & Core'],
-      'giữ dáng': ['Toàn thân cơ bản', 'Cardio nhẹ', 'Sức mạnh & Giãn cơ'],
+    // ---- Split-type engine: picks a realistic split based on days/week + goal + level ----
+    function buildFullBodyFocuses(n) {
+      const cycle = [
+        { label: 'Toàn thân A', groups: ['Chân', 'Ngực', 'Lưng'] },
+        { label: 'Toàn thân B', groups: ['Vai', 'Tay trước', 'Tay sau'] },
+        { label: 'Toàn thân C', groups: ['Chân', 'Bụng', 'Lưng'] },
+      ];
+      const arr = [];
+      for (let i = 0; i < n; i++) arr.push(cycle[i % cycle.length]);
+      return arr;
+    }
+
+    function getSplit(daysCount, goal, level) {
+      if (daysCount <= 3) {
+        return { splitName: 'Full Body', focuses: buildFullBodyFocuses(daysCount) };
+      }
+      if (daysCount === 4) {
+        const cycle = [
+          { label: 'Upper Body', groups: ['Ngực', 'Lưng', 'Vai'] },
+          { label: 'Lower Body', groups: ['Chân', 'Bụng'] },
+          { label: 'Upper Body', groups: ['Vai', 'Tay trước', 'Tay sau'] },
+          { label: 'Lower Body', groups: ['Chân', 'Bụng'] },
+        ];
+        return { splitName: 'Upper / Lower', focuses: cycle.slice(0, daysCount) };
+      }
+      // 5-6 days
+      if (goal === 'tăng cơ' && level === 'có kinh nghiệm') {
+        const bro = [
+          { label: 'Ngực', groups: ['Ngực'] },
+          { label: 'Lưng', groups: ['Lưng'] },
+          { label: 'Chân', groups: ['Chân'] },
+          { label: 'Vai', groups: ['Vai'] },
+          { label: 'Tay (Trước & Sau)', groups: ['Tay trước', 'Tay sau'] },
+          { label: 'Bụng & Cardio', groups: ['Bụng', 'Cardio'] },
+        ];
+        return { splitName: 'Bro Split', focuses: bro.slice(0, daysCount) };
+      }
+      const ppl = [
+        { label: 'Đẩy (Push)', groups: ['Ngực', 'Vai', 'Tay sau'] },
+        { label: 'Kéo (Pull)', groups: ['Lưng', 'Tay trước'] },
+        { label: 'Chân (Legs)', groups: ['Chân', 'Bụng'] },
+      ];
+      const focuses = [];
+      for (let i = 0; i < daysCount; i++) focuses.push(ppl[i % ppl.length]);
+      return { splitName: 'Push / Pull / Legs', focuses };
+    }
+
+    // ---- Intensity engine: sets/reps/rest vary by goal + experience level ----
+    function setsRepsFor(goal, level, compound) {
+      if (goal === 'tăng cơ') {
+        if (level === 'có kinh nghiệm') return compound ? { setsReps: '4 x 6-8', rest: '90s' } : { setsReps: '3 x 10-12', rest: '60s' };
+        return compound ? { setsReps: '3 x 10', rest: '75s' } : { setsReps: '3 x 12', rest: '45s' };
+      }
+      if (goal === 'giảm cân') {
+        return level === 'có kinh nghiệm' ? { setsReps: '3 x 15', rest: '30s' } : { setsReps: '3 x 12', rest: '45s' };
+      }
+      // giữ dáng
+      return level === 'có kinh nghiệm' ? { setsReps: '3 x 12', rest: '45s' } : { setsReps: '3 x 15', rest: '60s' };
+    }
+
+    function pickExercisesForDay(groups, exCount, goal, level, dayIndex) {
+      const list = [];
+      const usedNames = new Set();
+      let gi = 0, guard = 0;
+      while (list.length < exCount && guard < 60) {
+        guard++;
+        const group = groups[gi % groups.length];
+        gi++;
+        const pool = EXERCISE_DB[group] || [];
+        const candidate = pool.find(e => !usedNames.has(e.name));
+        if (!candidate) continue;
+        usedNames.add(candidate.name);
+        const ir = setsRepsFor(goal, level, candidate.compound);
+        list.push({ name: candidate.name, muscle: group, setsReps: ir.setsReps, rest: ir.rest });
+      }
+      if (goal === 'giảm cân') {
+        const cardioPool = EXERCISE_DB['Cardio'];
+        const cardio = cardioPool[dayIndex % cardioPool.length];
+        const duration = level === 'có kinh nghiệm' ? '15 phút HIIT' : '10 phút vừa sức';
+        list.push({ name: cardio.name, muscle: 'Cardio', setsReps: duration, rest: '—' });
+      }
+      return list;
+    }
+
+    // Spreads the chosen number of sessions across the week the way a coach would —
+    // leaving rest days between sessions rather than just stacking them at the front.
+    const WEEK_SCHEDULE_BY_COUNT = {
+      1: ['Thứ 4'],
+      2: ['Thứ 2', 'Thứ 5'],
+      3: ['Thứ 2', 'Thứ 4', 'Thứ 6'],
+      4: ['Thứ 2', 'Thứ 3', 'Thứ 5', 'Thứ 6'],
+      5: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 6', 'Thứ 7'],
+      6: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'],
     };
 
     function wizGenerate() {
-      wizNext(4);
+      wizNext(5);
       setTimeout(() => {
         const plan = buildPlan(wizSelections);
         savedPlan = plan;
         renderPlan(plan);
-        wizNext(5);
+        wizNext(6);
       }, 1400);
     }
 
     function buildPlan(sel) {
-      const daysCount = sel.time === '20 phút' ? 3 : (sel.time === '30 phút' ? 3 : 4);
-      const exCountByTime = { '20 phút': 3, '30 phút': 5, '60 phút': 6 };
-      const exCount = exCountByTime[sel.time] || 5;
-      const pool = EXERCISE_POOL[sel.goal] || EXERCISE_POOL['giữ dáng'];
-      const focuses = DAY_FOCUS_BY_GOAL[sel.goal] || DAY_FOCUS_BY_GOAL['giữ dáng'];
-      const dayNames = ['Thứ 2', 'Thứ 4', 'Thứ 6', 'Thứ 7'];
+      const daysCount = sel.days || 3;
+      const exCountByTime = { '20 phút': 3, '30 phút': 4, '60 phút': 5, '90 phút': 6 };
+      const exCount = exCountByTime[sel.time] || 4;
+      const split = getSplit(daysCount, sel.goal, sel.level);
+      const dayNames = WEEK_SCHEDULE_BY_COUNT[daysCount] || WEEK_SCHEDULE_BY_COUNT[3];
 
       const days = [];
       for (let i = 0; i < daysCount; i++) {
+        const f = split.focuses[i];
         days.push({
           day: dayNames[i],
-          focus: focuses[i % focuses.length],
-          exercises: pool.slice(0, exCount),
+          focus: f.label,
+          exercises: pickExercisesForDay(f.groups, exCount, sel.goal, sel.level, i),
         });
       }
-      return { goal: sel.goal, level: sel.level, time: sel.time, daysPerWeek: daysCount, days };
+      return { goal: sel.goal, level: sel.level, time: sel.time, daysPerWeek: daysCount, splitName: split.splitName, days };
     }
 
     function renderPlan(plan) {
       const banner = document.getElementById('planSummaryBanner');
       banner.innerHTML = `
-        <div class="tag">Giáo án cá nhân hóa</div>
+        <div class="tag">Giáo án cá nhân hóa · ${plan.splitName}</div>
         <div class="name">${capitalize(plan.goal)} · ${capitalize(plan.level)}</div>
         <div class="meta">
           <span>📅 ${plan.daysPerWeek} buổi/tuần</span>
@@ -3477,7 +4014,14 @@
             <span class="plan-day-name">${d.day}</span>
             <span class="plan-day-focus">${d.focus}</span>
           </div>
-          ${d.exercises.map(e => `<div class="plan-ex-row"><span>${e.name}</span><span class="sets">${e.sets}</span></div>`).join('')}
+          ${d.exercises.map(e => `
+            <div class="plan-ex-row">
+              <div>
+                <div class="ex-name">${e.name}</div>
+                <div class="ex-tag">${e.muscle}${e.rest && e.rest !== '—' ? ' · nghỉ ' + e.rest : ''}</div>
+              </div>
+              <span class="sets">${e.setsReps}</span>
+            </div>`).join('')}
         </div>
       `).join('');
     }
@@ -3496,22 +4040,542 @@
       showToast('✓ Đã lưu giáo án AI vào mục Tập luyện');
     }
 
+    const ALL_WEEKDAYS = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'CN'];
+
+    function getTodayVNWeekday() {
+      const map = ['CN', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+      return map[new Date().getDay()];
+    }
+
+    let currentPlanByDay = {};
+
     function updateScheduleSyncCard(plan) {
       const card = document.getElementById('aiPlanSyncCard');
       card.classList.add('has-plan');
+
+      currentPlanByDay = {};
+      plan.days.forEach(d => { currentPlanByDay[d.day] = d; });
+      const todayName = getTodayVNWeekday();
+      const todayPlan = currentPlanByDay[todayName];
+
       card.innerHTML = `
         <div class="card-title-row" style="margin-bottom:10px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ai-orange-dark)" stroke-width="2"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg>
           <span>Giáo án AI của bạn</span>
+          <span class="split-type-chip">${plan.splitName}</span>
         </div>
-        <div class="plan-summary-banner" style="margin-bottom:12px;">
+
+        <div class="plan-summary-banner" style="margin-bottom:14px;">
           <div class="tag">${capitalize(plan.goal)} · ${capitalize(plan.level)}</div>
           <div class="name">${plan.daysPerWeek} buổi / tuần · ${plan.time} mỗi buổi</div>
-          <div class="meta"><span>${plan.days.map(d => d.day.replace('Thứ ', 'T')).join(' · ')}</span></div>
+          <div class="meta"><span>Split: ${plan.splitName}</span></div>
         </div>
-        <button class="btn-ai-outline" style="width:100%;" onclick="openAI('wizard'); wizGenerate();">🔁 Tạo lại giáo án</button>
+
+        <div class="today-session-card ${todayPlan ? 'is-workout' : 'is-rest'}">
+          <div class="today-label">Hôm nay · ${todayName}</div>
+          ${todayPlan ? `
+            <div class="today-focus">${todayPlan.focus}</div>
+            <div class="today-sub">${todayPlan.exercises.length} bài tập theo giáo án của bạn</div>
+            <button class="btn-ai-primary" style="margin-top:10px;" onclick="startWorkoutSession()">▶️ Bắt đầu buổi tập</button>
+          ` : `
+            <div class="today-focus">Ngày nghỉ 😌</div>
+            <div class="today-sub">Nghỉ ngơi để cơ phục hồi. Uống đủ nước và ngủ đủ giấc nhé!</div>
+          `}
+        </div>
+
+        <div class="week-days-strip">
+          ${ALL_WEEKDAYS.map(d => `
+            <div class="week-day-pill ${currentPlanByDay[d] ? 'workout' : 'rest'} ${d === todayName ? 'is-today' : ''}" onclick="toggleDayDetail('${d}')">
+              <span class="wd-label">${d.replace('Thứ ', 'T')}</span>
+              <span class="wd-dot"></span>
+            </div>
+          `).join('')}
+        </div>
+
+        <div id="weekDayDetailBox"></div>
+
+        <button class="btn-ai-outline" style="width:100%; margin-top:12px;" onclick="openAI('wizard'); wizGenerate();">🔁 Tạo lại giáo án</button>
+      `;
+
+      toggleDayDetail(todayName);
+    }
+
+    function toggleDayDetail(dayName) {
+      const box = document.getElementById('weekDayDetailBox');
+      if (!box) return;
+      const d = currentPlanByDay[dayName];
+
+      const idx = ALL_WEEKDAYS.indexOf(dayName);
+      document.querySelectorAll('.week-day-pill').forEach((p, i) => p.classList.toggle('is-selected', i === idx));
+
+      if (!d) {
+        box.innerHTML = `<div class="rest-day-note">${dayName} là ngày nghỉ trong giáo án này — không có bài tập.</div>`;
+        return;
+      }
+      box.innerHTML = `
+        <div class="plan-day-card" style="margin-bottom:0;">
+          <div class="plan-day-head">
+            <span class="plan-day-name">${d.day}</span>
+            <span class="plan-day-focus">${d.focus}</span>
+          </div>
+          ${d.exercises.map(e => `
+            <div class="plan-ex-row">
+              <div>
+                <div class="ex-name">${e.name}</div>
+                <div class="ex-tag">${e.muscle}${e.rest && e.rest !== '—' ? ' · nghỉ ' + e.rest : ''}</div>
+              </div>
+              <span class="sets">${e.setsReps}</span>
+            </div>`).join('')}
+        </div>
       `;
     }
+
+    /* ================================================================ */
+    /* NHẬT KÝ TẬP TẠ — theo dõi mức tạ / sets / reps qua từng buổi       */
+    /* (Progressive overload tracking sheet — dữ liệu demo)              */
+    /* ================================================================ */
+    let workoutLogHistory = [
+      {
+        date: '26/07/2026', time: '16:45', focus: 'Push Day — Ngực · Vai · Tay sau',
+        exercises: [
+          { name: 'Barbell Bench Press', muscle: 'Ngực', sets: [{weight:32,reps:10},{weight:32,reps:9},{weight:30,reps:10},{weight:30,reps:8}] },
+          { name: 'Seated Shoulder Press', muscle: 'Vai', sets: [{weight:16,reps:12},{weight:16,reps:10},{weight:14,reps:12}] },
+          { name: 'Cable Tricep Pushdown', muscle: 'Tay sau', sets: [{weight:20,reps:12},{weight:20,reps:12},{weight:18,reps:14}] },
+        ]
+      },
+      {
+        date: '23/07/2026', time: '16:58', focus: 'Pull Day — Lưng · Tay trước',
+        exercises: [
+          { name: 'Lat Pulldown', muscle: 'Lưng', sets: [{weight:45,reps:10},{weight:45,reps:9},{weight:40,reps:10}] },
+          { name: 'Dumbbell Row', muscle: 'Lưng', sets: [{weight:30,reps:10},{weight:30,reps:10},{weight:28,reps:10}] },
+          { name: 'Barbell Curl', muscle: 'Tay trước', sets: [{weight:12,reps:12},{weight:12,reps:10}] },
+        ]
+      },
+      {
+        date: '18/07/2026', time: '17:15', focus: 'Push Day — Ngực · Vai · Tay sau',
+        exercises: [
+          { name: 'Barbell Bench Press', muscle: 'Ngực', sets: [{weight:30,reps:10},{weight:30,reps:9},{weight:28,reps:10},{weight:28,reps:8}] },
+          { name: 'Seated Shoulder Press', muscle: 'Vai', sets: [{weight:14,reps:12},{weight:14,reps:10},{weight:12,reps:12}] },
+          { name: 'Cable Tricep Pushdown', muscle: 'Tay sau', sets: [{weight:18,reps:12},{weight:18,reps:12},{weight:16,reps:14}] },
+        ]
+      },
+      {
+        date: '12/06/2026', time: '18:00', focus: 'Leg Day — Đùi · Mông',
+        exercises: [
+          { name: 'Barbell Squat', muscle: 'Chân', sets: [{weight:40,reps:10},{weight:40,reps:9},{weight:35,reps:10}] },
+          { name: 'Leg Press', muscle: 'Chân', sets: [{weight:80,reps:12},{weight:80,reps:12}] },
+        ]
+      },
+    ];
+
+    function volumeOf(ex) { return ex.sets.reduce((s, x) => s + x.weight * x.reps, 0); }
+    function sessionVolume(session) { return session.exercises.reduce((s, e) => s + volumeOf(e), 0); }
+    function topSet(ex) { return ex.sets.reduce((m, x) => (x.weight > m.weight ? x : m), ex.sets[0]); }
+
+    function renderHistoryList() {
+      const box = document.getElementById('historyList');
+      if (!box) return;
+      box.innerHTML = workoutLogHistory.map((s, i) => `
+        <div class="history-card" onclick="openLogDetail(${i})">
+          <div class="history-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span class="history-date">${s.date}</span>
+          </div>
+          <div class="history-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>${s.time}</span>
+          </div>
+          <div class="history-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Ways Station 86 Nguyễn Quý Anh</span>
+          </div>
+          <div class="history-summary-row">
+            <span class="vol">${s.focus} · ${s.exercises.length} bài · Volume ${sessionVolume(s).toLocaleString('vi-VN')}kg</span>
+            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function findPrevOccurrence(exerciseName, beforeIndex) {
+      for (let i = beforeIndex + 1; i < workoutLogHistory.length; i++) {
+        const found = workoutLogHistory[i].exercises.find(e => e.name === exerciseName);
+        if (found) return found;
+      }
+      return null;
+    }
+
+    function trendBadgeHTML(currTop, prevTop) {
+      if (!prevTop) return `<span class="trend-badge flat">Lần đầu ghi nhận</span>`;
+      const diff = Math.round((currTop.weight - prevTop.weight) * 10) / 10;
+      if (diff > 0) return `<span class="trend-badge up">▲ +${diff}kg so với lần trước</span>`;
+      if (diff < 0) return `<span class="trend-badge down">▼ ${diff}kg so với lần trước</span>`;
+      return `<span class="trend-badge flat">Bằng lần trước</span>`;
+    }
+
+    function openLogDetail(idx) {
+      const s = workoutLogHistory[idx];
+      const totalSets = s.exercises.reduce((n, e) => n + e.sets.length, 0);
+      const box = document.getElementById('logDetailContent');
+      box.innerHTML = `
+        <div class="log-detail-hero">
+          <div style="font-size:11px; font-weight:700; opacity:.8; text-transform:uppercase;">${s.date} · ${s.time}</div>
+          <div style="font-size:16px; font-weight:800; margin-top:3px;">${s.focus}</div>
+        </div>
+        <div class="log-detail-stats">
+          <div class="log-detail-stat-box"><div class="v">${s.exercises.length}</div><div class="l">Bài tập</div></div>
+          <div class="log-detail-stat-box"><div class="v">${totalSets}</div><div class="l">Tổng sets</div></div>
+          <div class="log-detail-stat-box"><div class="v">${sessionVolume(s).toLocaleString('vi-VN')}</div><div class="l">Volume (kg)</div></div>
+        </div>
+        ${s.exercises.map(e => {
+          const prev = findPrevOccurrence(e.name, idx);
+          const t = topSet(e);
+          const pt = prev ? topSet(prev) : null;
+          return `
+            <div class="log-ex-card">
+              <div class="log-ex-head">
+                <span class="n">${e.name}</span>
+                <span class="m">${e.muscle}</span>
+              </div>
+              <div class="log-set-row head"><span>Set</span><span>Tạ (kg)</span><span>Reps</span></div>
+              ${e.sets.map((st, i) => `<div class="log-set-row"><span>${i + 1}</span><span>${st.weight}kg</span><span>${st.reps}</span></div>`).join('')}
+              ${trendBadgeHTML(t, pt)}
+            </div>
+          `;
+        }).join('')}
+      `;
+      openAI('logDetail');
+      aiHeaderTitle.textContent = 'Chi tiết buổi tập';
+      aiHeaderSubtitle.textContent = `${s.date} · ${s.focus}`;
+    }
+
+    /* ================================================================ */
+    /* BUỔI TẬP THEO TỪNG BÀI — chọn bài → hướng dẫn + AI check form      */
+    /* + nhập tạ/sets/reps → tự động sync vào Nhật ký tập tạ             */
+    /* ================================================================ */
+    let sessionExercises = [];
+    let sessionFocus = '';
+    let sessionIndex = -1;
+    let sessionEditRows = [];
+    let sessionCoachInterval = null;
+    let workoutStreak = 4; // demo baseline — tăng mỗi khi hoàn thành 1 buổi tập
+
+    function startWorkoutSession() {
+      const todayName = getTodayVNWeekday();
+      const todayPlan = currentPlanByDay[todayName];
+      if (!todayPlan) { showToast('Hôm nay là ngày nghỉ trong giáo án 😌'); return; }
+      sessionExercises = todayPlan.exercises.map(e => ({ ...e, done: false, loggedSets: null }));
+      sessionFocus = todayPlan.focus;
+      showSessionListView();
+    }
+
+    function showSessionListView() {
+      if (sessionCoachInterval) { clearInterval(sessionCoachInterval); sessionCoachInterval = null; }
+      openAI('session');
+      aiHeaderTitle.textContent = 'Buổi tập hôm nay';
+      aiHeaderSubtitle.textContent = sessionFocus;
+      renderSessionList();
+    }
+
+    function renderSessionList() {
+      const doneCount = sessionExercises.filter(e => e.done).length;
+      const pct = Math.round((doneCount / sessionExercises.length) * 100);
+      document.getElementById('sessionListContent').innerHTML = `
+        <div class="session-focus-banner">
+          <div class="tag">${sessionFocus}</div>
+          <div class="name">${doneCount}/${sessionExercises.length} bài đã hoàn thành</div>
+          <div class="progress-track"><div class="progress-fill" style="width:${pct}%;"></div></div>
+        </div>
+        ${sessionExercises.map((e, i) => `
+          <div class="session-ex-card ${e.done ? 'done' : ''}" onclick="openSessionExercise(${i})">
+            <div class="session-ex-num">${e.done ? '✓' : (i + 1)}</div>
+            <div class="info">
+              <div class="n">${e.name}</div>
+              <div class="s">${e.muscle} · ${e.setsReps}${e.rest && e.rest !== '—' ? ' · nghỉ ' + e.rest : ''}</div>
+            </div>
+            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        `).join('')}
+        ${doneCount === sessionExercises.length ? `<button class="btn-ai-primary" style="width:100%; margin-top:6px;" onclick="finishWorkoutSession()">🏁 Hoàn thành buổi tập</button>` : ''}
+      `;
+    }
+
+    const GENERIC_STEPS = {
+      push: ['Khởi động khớp vai và cổ tay nhẹ nhàng trong 30 giây', 'Vào tư thế chuẩn, giữ lưng thẳng và siết cơ trung tâm', 'Hạ tạ xuống chậm rãi, kiểm soát nhịp thở', 'Đẩy lên dứt khoát, không khóa cứng khớp ở điểm cuối'],
+      pull: ['Khởi động vai và lưng trong 30 giây', 'Nắm chắc tay cầm, giữ lưng thẳng, ngực ưỡn nhẹ', 'Kéo về phía cơ thể, siết chặt cơ lưng ở cuối động tác', 'Thả ra từ từ, kiểm soát để không bị giật'],
+      legs: ['Khởi động khớp gối và hông trong 30 giây', 'Đứng rộng bằng vai, giữ lưng thẳng, mắt nhìn thẳng', 'Hạ trọng tâm xuống chậm, đầu gối không vượt quá mũi chân', 'Đẩy lên qua gót chân, siết mông ở điểm cao nhất'],
+      core: ['Khởi động nhẹ vùng bụng và hông', 'Vào tư thế, giữ cột sống ở vị trí trung tính', 'Siết chặt cơ bụng trong suốt động tác', 'Thở đều, tránh nín thở khi gắng sức'],
+      cardio: ['Khởi động 3-5 phút với cường độ nhẹ', 'Tăng dần cường độ theo hướng dẫn của giáo án', 'Giữ nhịp thở đều và tư thế thoải mái', 'Hạ nhiệt và giãn cơ nhẹ sau khi kết thúc'],
+    };
+
+    function stepsFor(ex) {
+      const m = ex.muscle;
+      if (m === 'Ngực' || m === 'Vai' || m === 'Tay sau') return GENERIC_STEPS.push;
+      if (m === 'Lưng' || m === 'Tay trước') return GENERIC_STEPS.pull;
+      if (m === 'Chân') return GENERIC_STEPS.legs;
+      if (m === 'Bụng') return GENERIC_STEPS.core;
+      return GENERIC_STEPS.cardio;
+    }
+
+    function suggestedWeight(exerciseName) {
+      for (const s of workoutLogHistory) {
+        const found = s.exercises.find(e => e.name === exerciseName);
+        if (found) return topSet(found).weight + 2;
+      }
+      return 20;
+    }
+
+    function parseSetsReps(setsReps) {
+      const m = setsReps.match(/^(\d+)\s*x\s*(.+)$/i);
+      if (!m) return null;
+      const count = parseInt(m[1], 10);
+      const reps = parseInt(m[2].trim(), 10) || 10;
+      return { count, reps };
+    }
+
+    function openSessionExercise(i) {
+      if (sessionCoachInterval) { clearInterval(sessionCoachInterval); sessionCoachInterval = null; }
+      sessionIndex = i;
+      const ex = sessionExercises[i];
+      openAI('sessionEx');
+      aiHeaderTitle.textContent = ex.name;
+      aiHeaderSubtitle.textContent = ex.muscle;
+
+      const isCardio = ex.muscle === 'Cardio';
+      const parsed = parseSetsReps(ex.setsReps);
+      sessionEditRows = ex.loggedSets ? ex.loggedSets.map(r => ({ ...r })) :
+        (isCardio ? [{ weight: 15, reps: 'Vừa sức' }] :
+          Array.from({ length: parsed ? parsed.count : 3 }, () => ({ weight: suggestedWeight(ex.name), reps: parsed ? parsed.reps : 10 })));
+
+      document.getElementById('sessionExContent').innerHTML = `
+        <div class="video-mock">
+          <span class="badge-demo">Video demo</span>
+          <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="6 4 20 12 6 20"/></svg></div>
+          <div class="lbl">Video hướng dẫn: ${ex.name}</div>
+        </div>
+
+        <div class="ai-section-label" style="margin-top:0;">Hướng dẫn thực hiện</div>
+        <div class="step-list">
+          ${stepsFor(ex).map((s, idx) => `<div class="step-row"><div class="step-num">${idx + 1}</div><div class="step-text">${s}</div></div>`).join('')}
+        </div>
+
+        <div class="ai-section-label">AI kiểm tra form qua camera</div>
+        <div class="camera-mock" id="sessionCameraMock" style="height:220px;">
+          <div class="rec-dot"><span class="r"></span>AI ĐANG XEM</div>
+          <div class="rep-counter"><div class="num" id="sessionRepCount">0</div><div class="lbl">reps</div></div>
+          <svg class="silhouette" width="90" height="150" viewBox="0 0 120 200" fill="currentColor"><circle cx="60" cy="28" r="18"/><path d="M60 48 C30 48 22 80 26 110 L38 108 C36 90 40 76 46 66 L46 140 L36 195 L48 195 L58 150 L62 150 L72 195 L84 195 L74 140 L74 66 C80 76 84 90 82 108 L94 110 C98 80 90 48 60 48Z"/></svg>
+          <div class="caption-bubble" id="sessionCaptionBubble">
+            <svg class="wave" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12h2m3-5v10m3-8v6m3-9v12m3-8v4m3-2h2"/></svg>
+            <span id="sessionCaptionText">Sẵn sàng khi bạn bắt đầu</span>
+          </div>
+        </div>
+        <button class="btn-ai-secondary" style="width:100%; margin-bottom:16px;" id="sessionCoachBtn" onclick="startSessionCoach('${ex.name.replace(/'/g, "\\'")}')">🎥 Bật AI kiểm tra form</button>
+
+        <div class="ai-section-label">Ghi lại kết quả</div>
+        ${!isCardio ? `<div class="suggest-note">💡 <span>WayBuddy gợi ý mức tạ ${suggestedWeight(ex.name)}kg dựa trên lần tập gần nhất, đã điền sẵn bên dưới — bạn có thể chỉnh lại.</span></div>` : ''}
+        <div class="sets-table" id="sessionSetsTable"></div>
+        ${!isCardio ? `<button class="btn-add-set" onclick="addSessionSet()">+ Thêm set</button>` : ''}
+
+        <div class="wizard-nav">
+          <button class="btn-ai-secondary" onclick="showSessionListView()">Danh sách bài</button>
+          <button class="btn-ai-primary" onclick="saveSessionExercise()">💾 Lưu & tiếp tục</button>
+        </div>
+      `;
+      renderSessionSetsTable(isCardio);
+    }
+
+    function renderSessionSetsTable(isCardio) {
+      const box = document.getElementById('sessionSetsTable');
+      if (isCardio) {
+        box.innerHTML = `
+          <div class="sets-table-head" style="grid-template-columns:1fr 1fr;"><span>Thời gian (phút)</span><span>Cảm nhận</span></div>
+          <div class="set-row" style="grid-template-columns:1fr 1fr;">
+            <input type="number" min="0" value="${sessionEditRows[0].weight}" onchange="sessionEditRows[0].weight=Number(this.value)">
+            <input type="text" value="${sessionEditRows[0].reps}" onchange="sessionEditRows[0].reps=this.value">
+          </div>
+        `;
+        return;
+      }
+      box.innerHTML = `
+        <div class="sets-table-head"><span>Set</span><span>Tạ (kg)</span><span>Reps</span><span></span></div>
+        ${sessionEditRows.map((r, i) => `
+          <div class="set-row">
+            <span class="set-num">${i + 1}</span>
+            <input type="number" min="0" step="0.5" value="${r.weight}" onchange="sessionEditRows[${i}].weight=Number(this.value)">
+            <input type="number" min="0" value="${r.reps}" onchange="sessionEditRows[${i}].reps=Number(this.value)">
+            <button class="set-remove-btn" onclick="removeSessionSet(${i})">×</button>
+          </div>
+        `).join('')}
+      `;
+    }
+
+    function addSessionSet() {
+      const last = sessionEditRows[sessionEditRows.length - 1] || { weight: 20, reps: 10 };
+      sessionEditRows.push({ ...last });
+      renderSessionSetsTable(false);
+    }
+
+    function removeSessionSet(i) {
+      if (sessionEditRows.length <= 1) return;
+      sessionEditRows.splice(i, 1);
+      renderSessionSetsTable(false);
+    }
+
+    function startSessionCoach(exName) {
+      const btn = document.getElementById('sessionCoachBtn');
+      btn.disabled = true;
+      btn.textContent = 'Đang theo dõi...';
+      let reps = 0;
+      let capIndex = 0;
+      const bubble = document.getElementById('sessionCaptionBubble');
+      const capText = document.getElementById('sessionCaptionText');
+      bubble.classList.add('show');
+      sessionCoachInterval = setInterval(() => {
+        bubble.classList.remove('show');
+        setTimeout(() => {
+          capText.textContent = COACH_CAPTIONS[capIndex % COACH_CAPTIONS.length];
+          bubble.classList.add('show');
+          capIndex++;
+        }, 200);
+        reps++;
+        document.getElementById('sessionRepCount').textContent = reps;
+        if (reps >= 10) {
+          clearInterval(sessionCoachInterval);
+          sessionCoachInterval = null;
+          capText.textContent = `Hoàn thành! Form bài ${exName} rất tốt 🎉`;
+          btn.textContent = '✓ Đã kiểm tra form';
+        }
+      }, 1400);
+    }
+
+    function saveSessionExercise() {
+      sessionExercises[sessionIndex].done = true;
+      sessionExercises[sessionIndex].loggedSets = sessionEditRows.map(r => ({ ...r }));
+      if (sessionCoachInterval) { clearInterval(sessionCoachInterval); sessionCoachInterval = null; }
+      const savedName = sessionExercises[sessionIndex].name;
+      const nextIdx = sessionExercises.findIndex((e, i) => i > sessionIndex && !e.done);
+      showToast(`✓ Đã lưu ${savedName}`);
+      if (nextIdx !== -1) {
+        openSessionExercise(nextIdx);
+      } else {
+        showSessionListView();
+      }
+    }
+
+    function finishWorkoutSession() {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('vi-VN');
+      const timeStr = now.toTimeString().slice(0, 5);
+      const newSession = {
+        date: dateStr, time: timeStr, focus: sessionFocus,
+        exercises: sessionExercises.filter(e => e.muscle !== 'Cardio').map(e => ({ name: e.name, muscle: e.muscle, sets: e.loggedSets || [] }))
+      };
+      workoutLogHistory.unshift(newSession);
+      workoutStreak++;
+      renderHistoryList();
+      closeAI();
+      showToast('🏁 Đã lưu buổi tập vào Nhật ký tập luyện');
+    }
+
+    /* ================================================================ */
+    /* BÁO CÁO TIẾN ĐỘ — tự động tổng hợp từ Nhật ký tập tạ              */
+    /* ================================================================ */
+    function estimateDurationMin(session) {
+      const totalSets = session.exercises.reduce((n, e) => n + e.sets.length, 0);
+      return Math.round(session.exercises.length * 3 + totalSets * 2.2);
+    }
+
+    function estimateKcal(session) {
+      const vol = sessionVolume(session);
+      return Math.round(vol * 0.35 + session.exercises.length * 25);
+    }
+
+    function renderProgressReport() {
+      const box = document.getElementById('reportContent');
+      if (!box) return;
+      if (workoutLogHistory.length === 0) {
+        box.innerHTML = `<div class="rest-day-note">Chưa có buổi tập nào được ghi nhận. Hoàn thành một buổi tập ở mục Tập luyện để WayBuddy tổng hợp báo cáo tại đây.</div>`;
+        return;
+      }
+      const latest = workoutLogHistory[0];
+      const duration = estimateDurationMin(latest);
+      const kcal = estimateKcal(latest);
+      const completed = latest.exercises.length;
+
+      // Tìm 1 bài tập trong buổi mới nhất từng xuất hiện ở buổi trước đó để so sánh
+      let compareEx = null, compareOld = null;
+      for (const e of latest.exercises) {
+        const found = findPrevOccurrence(e.name, 0);
+        if (found) { compareEx = e; compareOld = found; break; }
+      }
+
+      let compareBarsHTML = '';
+      let tipHTML = `<div class="food-tip-box"><span>💡</span><span>Hoàn thành thêm vài buổi nữa với cùng bài tập để WayBuddy so sánh tiến độ tạ giữa các buổi cho bạn nhé!</span></div>`;
+
+      if (compareEx && compareOld) {
+        const tNow = topSet(compareEx), tPrev = topSet(compareOld);
+        const avgRepsNow = Math.round(compareEx.sets.reduce((s, x) => s + x.reps, 0) / compareEx.sets.length);
+        const avgRepsPrev = Math.round(compareOld.sets.reduce((s, x) => s + x.reps, 0) / compareOld.sets.length);
+        const wPct = ratioPct(tPrev.weight, tNow.weight);
+        const rPct = ratioPct(avgRepsPrev, avgRepsNow);
+        compareBarsHTML = `
+          <div class="compare-bar-row">
+            <div class="lbl-row"><span>Mức tạ ${compareEx.name}</span><span>${tPrev.weight}kg → ${tNow.weight}kg</span></div>
+            <div class="compare-bar-track"><div class="seg prev" style="width:${wPct}%;"></div><div class="seg now" style="width:${100 - wPct}%;"></div></div>
+          </div>
+          <div class="compare-bar-row">
+            <div class="lbl-row"><span>Số reps trung bình</span><span>${avgRepsPrev} → ${avgRepsNow}</span></div>
+            <div class="compare-bar-track"><div class="seg prev" style="width:${rPct}%;"></div><div class="seg now" style="width:${100 - rPct}%;"></div></div>
+          </div>
+        `;
+        const diff = Math.round((tNow.weight - tPrev.weight) * 10) / 10;
+        if (diff > 0) {
+          tipHTML = `<div class="food-tip-box"><span>💡</span><span>Bạn đang tiến bộ đều! WayBuddy đề xuất tăng thêm ${Math.min(diff + 1, diff * 2).toFixed(1).replace(/\.0$/, '')}kg cho bài ${compareEx.name} vào buổi tới, và ưu tiên ngủ đủ 7-8 tiếng để phục hồi cơ tốt hơn.</span></div>`;
+        } else if (diff < 0) {
+          tipHTML = `<div class="food-tip-box"><span>💡</span><span>Mức tạ bài ${compareEx.name} giảm nhẹ so với buổi trước — có thể do mệt mỏi hoặc phục hồi chưa đủ. WayBuddy đề xuất giữ nguyên mức tạ cũ ở buổi tới thay vì tăng thêm.</span></div>`;
+        } else {
+          tipHTML = `<div class="food-tip-box"><span>💡</span><span>Bạn giữ phong độ ổn định ở bài ${compareEx.name}. Thử tăng thêm 1-2kg ở buổi tới để tiếp tục progressive overload nhé!</span></div>`;
+        }
+      }
+
+      box.innerHTML = `
+        <div class="report-hero">
+          <div class="row">
+            <div>
+              <div style="font-size:11px; font-weight:700; opacity:0.85; text-transform:uppercase;">Buổi tập gần nhất · ${latest.date}</div>
+              <div style="font-size:16px; font-weight:800; margin-top:2px;">${latest.focus}</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="streak">🔥 ${workoutStreak}</div>
+              <div style="font-size:10px; font-weight:700; opacity:0.85;">ngày liên tiếp</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-stat-grid">
+          <div class="report-stat-box"><div class="v">${duration}′</div><div class="l">Thời gian</div></div>
+          <div class="report-stat-box"><div class="v">${kcal}</div><div class="l">Kcal</div></div>
+          <div class="report-stat-box"><div class="v">${completed}/${completed}</div><div class="l">Bài hoàn thành</div></div>
+        </div>
+
+        <div class="report-compare-card">
+          <div class="ai-section-label" style="margin-top:0;">So với buổi trước</div>
+          ${compareBarsHTML}
+          ${tipHTML}
+        </div>
+
+        <button class="btn-ai-primary" onclick="openAI('wizard')">Xem / cập nhật giáo án tuần này</button>
+      `;
+    }
+
+    function ratioPct(prevVal, nowVal) {
+      if (!prevVal && !nowVal) return 50;
+      if (nowVal <= 0) return 50;
+      const pct = Math.round((prevVal / nowVal) * 100);
+      return Math.max(15, Math.min(92, pct));
+    }
+
+    renderHistoryList();
 
     /* ---------------- AI Form Coach ---------------- */
     const COACH_CAPTIONS = [
