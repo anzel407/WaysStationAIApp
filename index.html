@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Ways Station Gym</title>
   <!-- Google Fonts: Montserrat & Plus Jakarta Sans for crisp modern typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,6 +28,9 @@
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
       --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
       --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      /* Vùng an toàn (notch, tai thỏ, home indicator) — chỉ có giá trị thật trên thiết bị di động thật */
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
 
     * {
@@ -2687,6 +2690,66 @@
       transform: translate(-50%, 0);
     }
 
+  /* ==================================================================== */
+  /* MOBILE COMPATIBILITY                                                 */
+  /* Khi mở trên điện thoại thật (màn hình hẹp): app chiếm toàn bộ màn    */
+  /* hình thay vì hiển thị dạng khung mockup, và ẩn thanh trạng thái giả  */
+  /* (giờ/4G/pin) vì màn hình thật của máy đã có sẵn thanh trạng thái    */
+  /* của hệ điều hành rồi.                                                */
+  /* ==================================================================== */
+  @media (max-width: 640px) {
+    html, body {
+      height: 100%;
+      height: 100dvh; /* tránh bị che bởi thanh địa chỉ trình duyệt di động */
+    }
+
+    body {
+      background: var(--bg-gray);
+      padding: 0;
+    }
+
+    /* Bỏ khung mockup điện thoại (bo góc, viền, đổ bóng) — app chiếm full màn hình thật */
+    .app-viewport {
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      max-width: none;
+      max-height: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* Ẩn thanh trạng thái giả lập (giờ/4G/pin) trên mobile thật */
+    .status-bar {
+      display: none;
+    }
+
+    /* Bù lại vùng notch/tai thỏ cho các header đầu trang, vì không còn status-bar giả để "đẩy" nội dung xuống */
+    .home-header {
+      padding-top: calc(10px + var(--safe-top));
+    }
+
+    .page-header {
+      padding-top: calc(16px + var(--safe-top));
+    }
+
+    .ai-overlay-header {
+      padding-top: calc(18px + var(--safe-top));
+    }
+
+    /* Bù vùng home-indicator ở đáy màn hình (iPhone không phím Home, Android gesture bar) */
+    .bottom-nav {
+      bottom: calc(12px + var(--safe-bottom));
+    }
+
+    .ai-fab {
+      bottom: calc(88px + var(--safe-bottom));
+    }
+
+    .ai-chat-input-row {
+      padding-bottom: calc(16px + var(--safe-bottom));
+    }
+  }
   </style>
 </head>
 <body>
